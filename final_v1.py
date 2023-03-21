@@ -1,5 +1,4 @@
-import logging
-from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto, ParseMode
+from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, Filters, CallbackContext
 import json
 import requests
@@ -23,8 +22,6 @@ router_abi_url = "https://bridgeapi.anyswap.exchange/routerabi"
 router_abi = json.loads(requests.get(router_abi_url).text)
 
 TOKEN = "6058904432:AAEYX5x6IBvvORMkolo3dS-7lX88cNiYBwU"
-
-logging.basicConfig(level=logging.INFO)
 
 user_data = {
     "user_private_key": "",
@@ -65,7 +62,7 @@ def start(update: Update, context: CallbackContext):
     ]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
-    update.message.reply_text("<b><u>🔗Steps to create a Bridge on BridgeHub:</u></b>\n\n 1.Enter your <b><u>private key</u></b> <i>(to sign both the bridge and approval contract)</i>\n 2.<b>Your wallet and destination wallet</b> are required.\n 3.You need to specify the <b>Token</b> <i>(available only USDC and ETH)</i>\n 4.Choose the starting and <b>destination blockchain network</b> (available ERC20 and BEP20 network)\n 5.Enter the <b>amount of ETH or USDC</b> you want to transfer through the bridge.\n\n<b><i>Note: You can clear the entered data by clicking '🗑Clear Data' </i></b>", reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+    update.message.reply_text("<b><u>🔗Steps to create a Bridge on BridgeHub:</u></b>\n\n 1.Enter your <b><u>private key</u></b> <i>(to sign both the bridge and approval contract)</i>\n 2.<b>Your wallet and destination wallet</b> are required.\n 3.You need to specify the <b>Token</b> <i>(available only USDC and ETH)</i>\n 4.Choose the starting and <b>destination blockchain network</b> (available ERC20 and BEP20 network)\n 5.Enter the <b>amount of ETH or USDC</b> you want to transfer through the bridge.\n\n<b><i>Note: You can clear the entered data by clicking '🗑Clear Data' </i></b>", reply_markup=reply_markup, parse_mode="html")
 
 def button_callback(update: Update, context: CallbackContext):
     query = update.callback_query
@@ -117,7 +114,7 @@ def clear_data_callback(update: Update, context: CallbackContext):
         ]
 
         reply_markup = InlineKeyboardMarkup(keyboard)
-        query.edit_message_text("<b><u>🔗Steps to create a Bridge on BridgeHub:</u></b>\n\n 1.Enter your <b><u>private key</u></b> <i>(to sign both the bridge and approval contract)</i>\n 2.<b>Your wallet and destination wallet</b> are required.\n 3.You need to specify the <b>Token</b> <i>(available only USDC and ETH)</i>\n 4.Choose the starting and <b>destination blockchain network</b> (available ERC20 and BEP20 network)\n 5.Enter the <b>amount of ETH or USDC</b> you want to transfer through the bridge.\n\n<b><i>Note: You can clear the entered data by clicking '🗑Clear Data' </i></b>", reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+        query.edit_message_text("<b><u>🔗Steps to create a Bridge on BridgeHub:</u></b>\n\n 1.Enter your <b><u>private key</u></b> <i>(to sign both the bridge and approval contract)</i>\n 2.<b>Your wallet and destination wallet</b> are required.\n 3.You need to specify the <b>Token</b> <i>(available only USDC and ETH)</i>\n 4.Choose the starting and <b>destination blockchain network</b> (available ERC20 and BEP20 network)\n 5.Enter the <b>amount of ETH or USDC</b> you want to transfer through the bridge.\n\n<b><i>Note: You can clear the entered data by clicking '🗑Clear Data' </i></b>", reply_markup=reply_markup, parse_mode="html")
 
 
 def message_handler(update: Update, context: CallbackContext):
@@ -139,7 +136,7 @@ def message_handler(update: Update, context: CallbackContext):
                 f"6. <b>Destinatary Network:</b>\n {context.user_data['button_6'].upper()}\n\n"
                 f"7. <b>{context.user_data['button_3'].upper()} Amount:</b>\n {context.user_data['button_7']}\n\n"
             )
-            update.message.reply_text(summary, parse_mode=ParseMode.HTML)
+            update.message.reply_text(summary, parse_mode="html")
 
             keyboard = [
                 [InlineKeyboardButton("👍 Bridge now", callback_data="bridge")],
@@ -170,7 +167,7 @@ def message_handler(update: Update, context: CallbackContext):
                 ],
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
-            update.message.reply_text("<b><u>🔗Steps to create a Bridge on BridgeHub:</u></b>\n\n 1.Enter your <b><u>private key</u></b> <i>(to sign both the bridge and approval contract)</i>\n 2.<b>Your wallet and destination wallet</b> are required.\n 3.You need to specify the <b>Token</b> <i>(available only USDC and ETH)</i>\n 4.Choose the starting and <b>destination blockchain network</b> (available ERC20 and BEP20 network)\n 5.Enter the <b>amount of ETH or USDC</b> you want to transfer through the bridge.\n\n<b><i>Note: You can clear the entered data by clicking '🗑Clear Data' </i></b>", reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+            update.message.reply_text("<b><u>🔗Steps to create a Bridge on BridgeHub:</u></b>\n\n 1.Enter your <b><u>private key</u></b> <i>(to sign both the bridge and approval contract)</i>\n 2.<b>Your wallet and destination wallet</b> are required.\n 3.You need to specify the <b>Token</b> <i>(available only USDC and ETH)</i>\n 4.Choose the starting and <b>destination blockchain network</b> (available ERC20 and BEP20 network)\n 5.Enter the <b>amount of ETH or USDC</b> you want to transfer through the bridge.\n\n<b><i>Note: You can clear the entered data by clicking '🗑Clear Data' </i></b>", reply_markup=reply_markup, parse_mode="html")
 
 def bridge_callback(update: Update, context: CallbackContext):
     query = update.callback_query
